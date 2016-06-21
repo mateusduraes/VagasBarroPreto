@@ -1,5 +1,15 @@
-/*Validações dos inputs*/
-$('form').on('blur', 'input', function(){
+function validaVisualmente($elemento){
+    $elemento.removeClass('invalido');
+    $elemento.addClass('valido');
+}
+
+function invalidaVisualmente($elemento){
+    $elemento.removeClass('valido');
+    $elemento.addClass('invalido');
+}
+
+/*Validações do formulário do cadastro para candidato*/
+$('#form-cadastro-candidato').on('blur', 'input', function(){
     /* Pra cada validação, caso false, será chamado a respectiva function para adicionar um elemento na página*/
     if ($(this).hasClass('input-cadastrar-nome')){
         if(validaNome($(this).val())){
@@ -63,9 +73,8 @@ $('form').on('blur', 'input', function(){
 
 });
 
-
-/*Validações dos textarea*/
-$('form').on('blur', 'textarea', function(){
+/*Validações dos textarea do cadastro para candidato*/
+$('#form-cadastro-candidato').on('blur', 'textarea', function(){
     if($(this).hasClass('textarea-cadastrar-descricao')){
         if(validaDescricao($(this).val())){
             validaVisualmente($(this));
@@ -84,12 +93,50 @@ $('form').on('blur', 'textarea', function(){
 
 });
 
-function validaVisualmente($elemento){
-    $elemento.removeClass('invalido');
-    $elemento.addClass('valido');
-}
+$('#form-cadastro-empregador').on('blur', 'input', function(){
 
-function invalidaVisualmente($elemento){
-    $elemento.removeClass('valido');
-    $elemento.addClass('invalido');
-}
+  if($(this).hasClass('input-cadastrar-nome')){
+    if(validaNome($(this).val())){
+      validaVisualmente($(this));
+    } else {
+      invalidaVisualmente($(this));
+    }
+  }
+
+  if($(this).hasClass('input-cadastrar-cnpj')){
+    if(validaCNPJ($(this).val())){
+      validaVisualmente($(this));
+    } else {
+      invalidaVisualmente($(this));
+    }
+  }
+
+  if($(this).hasClass('input-cadastrar-telefone')){
+    if(validaTelefone($(this).val())){
+      validaVisualmente($(this));
+    } else {
+      invalidaVisualmente($(this));
+    }
+  }
+
+  if($(this).hasClass('input-cadastrar-celular')){
+    if(validaCelular($(this).val())){
+      validaVisualmente($(this));
+    } else {
+      invalidaVisualmente($(this));
+    }
+  }
+
+  if($(this).hasClass('input-cadastrar-email')){
+    validaEmailEmpregador($(this).val(), $(this));
+  }
+
+  if($(this).hasClass('input-cadastrar-senha')){
+    if(validaSenha($(this).val())){
+      validaVisualmente($(this));
+    } else {
+      invalidaVisualmente($(this));
+    }
+  }
+
+});

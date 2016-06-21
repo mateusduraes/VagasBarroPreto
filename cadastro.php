@@ -4,8 +4,8 @@
 <section class="container-fluid" id="bg_home">
 		<div class="row">
 			<h1 class="text-center">Bem vindo ao Radar Vagas</h1>
-		</div>		
-			
+		</div>
+
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
@@ -23,13 +23,13 @@
 								<div id="cadastro_candidato" class="tab-pane fade in active">
 									<h4>Cadastro de Candidato</h4>
 
-									<form action="controller_cadastro_usuario.php" method="post" class="form-horizontal">
+									<form action="controller_cadastro_usuario.php" method="post" class="form-horizontal" id="form-cadastro-candidato">
 										<div class="col-md-6">
-											<div class="form-group">											    
+											<div class="form-group">
 												<label class="col-md-2" for="nome">Nome:</label>
 												<div class="col-md-7">
 												    <input type="text" class="form-control input-cadastrar-nome" name="nome" placeholder="ex.: João Henrique">
-												</div>							
+												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-md-2" for="telefone">Telefone:</label>
@@ -54,7 +54,7 @@
 												<div class="col-md-7">
 													<select name="sexo" class="form-control select-sexo">
 														<option value="m">Masculino</option>
-														<option value="f">Feminino</option>													
+														<option value="f">Feminino</option>
 													</select>
 												</div>
 											</div>
@@ -77,28 +77,28 @@
 													<div class="col-md-12">
 														<textarea class="form-control textarea-cadastrar-habilidades" name="habilidades" placeholder="Fale sobre suas habilidades, conhecmentos técnicos, etc."></textarea>
 													</div>
-											</div>	
-											
+											</div>
+
 											<div class="form-group">
 												<h4>Dados para login</h4>
 												<label class="col-md-2" for="email">Email:</label>
 												<div class="col-md-7">
 													<input type="email" name="email" class="form-control input-cadastrar-email" placeholder="ex.:email@live.com">
 												</div>
-											</div>	
+											</div>
 											<div class="form-group">
 												<label class="col-md-2" for="senha">Senha:</label>
 												<div class="col-md-7">
 													<input type="password" name="senha" class="form-control input-cadastrar-senha" placeholder="Digite sua senha!">
 												</div>
-											</div>									
+											</div>
 										</div>
 										<input type="hidden" name="usuario" value="candidato">
 										<button class="btn btn-primary" id="botao_cadastra_candidato">Cadastrar</button>
 									</form>
 								</div>
-								<!-- Fim Formulário para cadastro candidato -->							
-	
+								<!-- Fim Formulário para cadastro candidato -->
+
 
 
 
@@ -109,30 +109,30 @@
 								<div id="cadastro_empresa" class="tab-pane fade">
 									<h4>Cadastro de Empresa</h4>
 
-									<form action="controller_cadastro_usuario.php" method="post" class="form-horizontal">
+									<form action="controller_cadastro_usuario.php" method="post" class="form-horizontal" id="form-cadastro-empregador">
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label class="col-sm-2" for="nome">Nome:</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" placeholder="ex.: Roupa Nova" name="nome">
+													<input type="text" class="form-control input-cadastrar-nome" placeholder="ex.: Roupa Nova" name="nome">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-sm-2" for="cnpj">CNPJ:</label>
 												<div class="col-sm-7">
-													<input type="text" class="form-control" name="cnpj" placeholder="ex.:99.999.999/9999-99">
+													<input type="text" class="form-control input-cadastrar-cnpj" name="cnpj" placeholder="ex.:99.999.999/9999-99">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-sm-2" for="telefone">Telefone:</label>
 												<div class="col-sm-7">
-													<input type="tel" class="form-control" name="telefone" placeholder="ex.:(99)9999-9999">
+													<input type="tel" class="form-control input-cadastrar-telefone" name="telefone" placeholder="ex.:(99)9999-9999">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-sm-2" for="celular">Celular:</label>
 												<div class="col-sm-7">
-													<input type="tel" name="celular" class="form-control" placeholder="ex.:(99)99999-9999">
+													<input type="tel" name="celular" class="form-control input-cadastrar-celular" placeholder="ex.:(99)99999-9999">
 												</div>
 											</div>
 										</div>
@@ -141,13 +141,13 @@
 											<div class="form-group">
 												<label class="col-sm-2" for="email">Email:</label>
 												<div class="col-sm-7">
-													<input type="email" name="email" class="form-control" placeholder="ex.: email@live.com">
+													<input type="email" name="email" class="form-control input-cadastrar-email" placeholder="ex.: email@live.com">
 												</div>
 											</div>
 											<div class="form-group">
 												<label class="col-sm-2" for="senha">Senha:</label>
 												<div class="col-sm-7">
-													<input type="password" name="senha" class="form-control" placeholder="Digite sua senha!">
+													<input type="password" name="senha" class="form-control input-cadastrar-senha" placeholder="Digite sua senha!">
 												</div>
 											</div>
 										</div>
@@ -161,7 +161,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 </section>
 
 

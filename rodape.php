@@ -25,7 +25,9 @@
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/maskplugin.min.js"></script>
+	<script src="js/masks.js"></script>
 	<script src="js/validacao.js"></script>
-    <script src="js/cadastro.js"></script>
+  <script src="js/cadastro.js"></script>
 </body>
 </html>
