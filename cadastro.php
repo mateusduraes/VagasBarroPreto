@@ -53,7 +53,7 @@
 												<label class="col-md-2" for="Sexo">Sexo:</label>
 												<div class="col-md-7">
 													<select name="sexo" class="form-control select-sexo">
-														<option value="m">Masculino</option>
+														<option value="m" selected>Masculino</option>
 														<option value="f">Feminino</option>
 													</select>
 												</div>
@@ -93,8 +93,11 @@
 												</div>
 											</div>
 										</div>
-										<input type="hidden" name="usuario" value="candidato">
-										<button class="btn btn-primary" id="botao_cadastra_candidato">Cadastrar</button>
+
+										<div>
+											<input type="hidden" name="usuario" value="candidato">
+											<button class="btn btn-primary" id="botao_cadastra_candidato">Cadastrar</button>
+										</div>
 									</form>
 								</div>
 								<!-- Fim Formulário para cadastro candidato -->
@@ -151,8 +154,10 @@
 												</div>
 											</div>
 										</div>
-										<input type="hidden" name="usuario" value="empregador">
-										<button class="btn btn-primary" id="botao_cadastra_empresa">Cadastrar</button>
+										<div>
+											<input type="hidden" name="usuario" value="empregador">
+											<button class="btn btn-primary" id="botao_cadastra_empresa">Cadastrar</button>
+										</div>
 									</form>
 								</div>
 								<!-- Fim Formulário para cadastro empresa-->

@@ -1,142 +1,105 @@
-function validaVisualmente($elemento){
-    $elemento.removeClass('invalido');
-    $elemento.addClass('valido');
-}
-
-function invalidaVisualmente($elemento){
-    $elemento.removeClass('valido');
-    $elemento.addClass('invalido');
-}
 
 /*Validações do formulário do cadastro para candidato*/
 $('#form-cadastro-candidato').on('blur', 'input', function(){
     /* Pra cada validação, caso false, será chamado a respectiva function para adicionar um elemento na página*/
     if ($(this).hasClass('input-cadastrar-nome')){
-        if(validaNome($(this).val())){
-           validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+      validaNome($(this));
     }
-
     if ($(this).hasClass('input-cadastrar-telefone')){
-        if(validaTelefone($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+      validaTelefone($(this));
     }
-
     if ($(this).hasClass('input-cadastrar-celular')){
-        if(validaCelular($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+      validaCelular($(this));
     }
-
     if($(this).hasClass('input-cadastrar-idade')){
-        if(validaIdade($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaIdade($(this));
     }
-
     if($(this).hasClass('input-cadastrar-sexo')){
-        if(validaSexo($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaSexo($(this));
     }
-
     if($(this).hasClass('input-cadastrar-cpf')){
-        if(validaCPF($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaCPF($(this));
     }
-
     if($(this).hasClass('input-cadastrar-email')){
-        validaEmailCandidato($(this).val(), $(this));
+        validaEmailCandidato($(this));
     }
 
     if($(this).hasClass('input-cadastrar-senha')){
-        if(validaSenha($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaSenha($(this));
     }
-
 });
 
 /*Validações dos textarea do cadastro para candidato*/
 $('#form-cadastro-candidato').on('blur', 'textarea', function(){
     if($(this).hasClass('textarea-cadastrar-descricao')){
-        if(validaDescricao($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaDescricao($(this));
     }
-
     if($(this).hasClass('textarea-cadastrar-habilidades')){
-        if(validaHabilidades($(this).val())){
-            validaVisualmente($(this));
-        } else {
-            invalidaVisualmente($(this));
-        }
+        validaHabilidades($(this));
     }
-
 });
 
 $('#form-cadastro-empregador').on('blur', 'input', function(){
-
   if($(this).hasClass('input-cadastrar-nome')){
-    if(validaNome($(this).val())){
-      validaVisualmente($(this));
-    } else {
-      invalidaVisualmente($(this));
-    }
+    validaNome($(this));
   }
-
   if($(this).hasClass('input-cadastrar-cnpj')){
-    if(validaCNPJ($(this).val())){
-      validaVisualmente($(this));
-    } else {
-      invalidaVisualmente($(this));
-    }
+    validaCNPJ($(this));
   }
-
   if($(this).hasClass('input-cadastrar-telefone')){
-    if(validaTelefone($(this).val())){
-      validaVisualmente($(this));
-    } else {
-      invalidaVisualmente($(this));
-    }
+    validaTelefone($(this));
   }
-
   if($(this).hasClass('input-cadastrar-celular')){
-    if(validaCelular($(this).val())){
-      validaVisualmente($(this));
-    } else {
-      invalidaVisualmente($(this));
-    }
+    validaCelular($(this));
   }
-
   if($(this).hasClass('input-cadastrar-email')){
-    validaEmailEmpregador($(this).val(), $(this));
+    validaEmailEmpregador($(this));
   }
-
   if($(this).hasClass('input-cadastrar-senha')){
-    if(validaSenha($(this).val())){
-      validaVisualmente($(this));
-    } else {
-      invalidaVisualmente($(this));
+    validaSenha($(this));
+  }
+});
+
+
+/*Aqui é feito de fato a validação para o formulário de cadastro de candidato, os listeners anteriores
+apensa guiam o usuário para o preenchimento correto e validação visual dos campos */
+$('#form-cadastro-candidato').on('submit', function(){
+  event.preventDefault();
+  var booleans = [
+    validaNome($('.input-cadastrar-nome')),
+    validaTelefone($('.input-cadastrar-telefone')),
+    validaCelular($('.input-cadastrar-celular')),
+    validaIdade($('.input-cadastrar-idade')),
+    validaSexo($('.input-cadastrar-sexo')),
+    validaCPF($('.input-cadastrar-cpf')),
+    validaDescricao($('.textarea-cadastrar-descricao')),
+    validaHabilidades($('.textarea-cadastrar-habilidades')),
+    validaEmailCandidato($('.input-cadastrar-email')),
+    validaSenha($('.input-cadastrar-senha'))
+  ];
+
+  var invalido = false;
+  for (var i = 0; i < booleans.length; i++) {
+    if(!booleans[i]){
+        invalido = true;
     }
   }
+
+  if(invalido){
+    var mensagemInformacaoInvalida = "<p class='text-danger'>Algum campo não foi preenchido ou é inválido.</p>"
+    event.preventDefault();
+    if($(this).find('button').parent().find('p').length == 0){
+      $(this).find('button').parent().append(mensagemInformacaoInvalida).hide().fadeIn(1000);
+    } else {
+      $(this).find('button').parent().find('p').fadeOut(500).fadeIn(1000);
+    }
+  }
+});
+
+
+
+/*Aqui é feito de fato a validação para o formulário de cadastro de empresa, os listeners anteriores
+apensa guiam o usuário para o preenchimento correto e validação visual dos campos */
+$('#form-cadastro-empregador').on('submit', function(){
 
 });

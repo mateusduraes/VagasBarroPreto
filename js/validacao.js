@@ -1,7 +1,9 @@
-function validaNome (nome){
-    if(nome == ""){
+function validaNome ($elemento){
+    if($($elemento).val() == ""){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
@@ -10,12 +12,17 @@ function validaNome (nome){
 Aqui é feito validação com expressão regular, formato
 (99)9999-9999
 */
-function validaTelefone(telefone){
+function validaTelefone($elemento){
   var er = /\([0-9]{2}\)[0-9]{4}\-[0-9]{4}/g;
-  if(telefone.length != 13){
+  if($($elemento).val().length != 13){
+      invalidaVisualmente($elemento);
       return false;
+  } else if(er.test($($elemento).val())) {
+      validaVisualmente($elemento);
+      return true;
   } else {
-      return er.test(telefone);
+    invalidaVisualmente($elemento);
+    return false;
   }
 }
 
@@ -23,27 +30,36 @@ function validaTelefone(telefone){
 Aqui é feito validação com expressão regular, formato
 (99)99999-9999
 */
-function validaCelular(celular){
+function validaCelular($elemento){
   var er = /\([0-9]{2}\)[0-9]{5}\-[0-9]{4}/g;
-  if(celular.length != 14){
+  if($($elemento).val().length != 14){
+      invalidaVisualmente($elemento);
       return false;
+  } else if(er.test($($elemento).val())) {
+        validaVisualmente($elemento);
+        return true;
   } else {
-      return er.test(celular);
+    invalidaVisualmente($elemento);
+    return false;
   }
 }
 
-function validaIdade(idade){
-    if(parseInt(idade) <= 0 || idade == ""){
+function validaIdade($elemento){
+    if(parseInt($($elemento).val()) <= 0 || $($elemento).val() == ""){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
 
-function validaSexo(sexo){
-    if(sexo != "m" || sexo != "f"){
+function validaSexo($elemento){
+    if($($elemento).val() != "m" || $($elemento).val() != "f"){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
@@ -51,83 +67,120 @@ function validaSexo(sexo){
   Aqui é feito validação com expressão regular, formato
   123.456.789-01
 */
-function validaCPF(cpf){
+function validaCPF($elemento){
     var er = /[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}/g;
-    if(cpf.length != 14){
+    if($($elemento).val().length != 14){
+        invalidaVisualmente($elemento);
         return false;
+    } else if (er.test($($elemento).val())){
+        validaVisualmente($elemento);
+        return true;
     } else {
-        return er.test(cpf);
+      invalidaVisualmente($elemento);
+      return false;
     }
 }
 
-function validaDescricao(descricao){
-    if(descricao == ""){
+function validaDescricao($elemento){
+    if($($elemento).val() == ""){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
 
-function validaHabilidades(habilidades){
-    if(habilidades == ""){
+function validaHabilidades($elemento){
+    if($($elemento).val() == ""){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
 
 /*Expressão Regular de email e ajax pra verificar unique index no banco*/
-function validaEmailCandidato(email, $elemento){
-    if (email.length == 0){ //verificar também expressão regular
-        invalidaVisualmente($elemento);
-    } else {
-      var resultado;
-      $.ajax({
-           type: 'post',
-           data: {email : email},
-           url: 'get-candidato.php',
-           success: function(retorno){
-               console.log("Email não existe: " + retorno);
-               if(retorno == "false"){
-                 invalidaVisualmente($elemento);
-               } else if(retorno == "true") {
-                 validaVisualmente($elemento);
+function validaEmailCandidato($elemento){
+  if ($($elemento).val().length == 0){ //verificar também expressão regular
+      invalidaVisualmente($elemento);
+      var mensagemInformacaoInvalida = "<p class='text-danger'>E-mail inválido.</p>"
+      if($($elemento).hasClass('invalido')){
+        if($($elemento).parent().find('.text-danger').length == 0){
+          $($elemento).parent().append(mensagemInformacaoInvalida);
+          $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+        } else {
+          $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+        }
+      }
+  } else {
+    var resultado;
+    $.ajax({
+         type: 'post',
+         data: {email : $($elemento).val()},
+         url: 'get-candidato.php',
+         success: function(retorno){
+             console.log("Email não existe: " + retorno);
+             if(retorno == "false"){
+               invalidaVisualmente($elemento);
+               var mensagemInformacaoInvalida = "<p class='text-danger'>E-mail não disponível.</p>"
+               if($($elemento).hasClass('invalido')){
+                 if($($elemento).parent().find('.text-danger').length == 0){
+                   $($elemento).parent().append(mensagemInformacaoInvalida);
+                   $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+                 } else {
+                   $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+                 }
                }
-           }
-       })
-    }
+             } else if(retorno == "true") {
+               validaVisualmente($elemento);
+               $($elemento).parent().find('.text-danger').remove();
+             }
+         }
+     })
+  }
+
 }
 
 
-function validaEmailEmpregador(email, $elemento){
-    if (email.length == 0){ //verificar também expressão regular
+function validaEmailEmpregador($elemento){
+    if ($($elemento).val().length == 0){ //verificar também expressão regular
         invalidaVisualmente($elemento);
     } else {
       var resultado;
       $.ajax({
            type: 'post',
-           data: {email : email},
+           data: {email : $($elemento).val()},
            url: 'get-empregador.php',
            success: function(retorno){
                console.log("Email não existe: " + retorno);
                if(retorno == "false"){
                  invalidaVisualmente($elemento);
-                 var mensagemInformacaoInvalida = "<p class='text-danger'>Este e-mail já está sendo utilizado.</p>"
-                 $elemento.parent().append(mensagemInformacaoInvalida);
                } else if(retorno == "true") {
                  validaVisualmente($elemento);
-                 $elemento.parent().find('.text-danger').remove();
+                 $($elemento).parent().find('.text-danger').remove();
                }
            }
        })
     }
+    var mensagemInformacaoInvalida = "<p class='text-danger'>Este e-mail já está sendo utilizado.</p>"
+    if($($elemento).hasClass('invalido')){
+      if($($elemento).parent().find('.text-danger').length == 0){
+        $($elemento).parent().append(mensagemInformacaoInvalida).hide().fadeIn(1000);
+      } else {
+        $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+      }
+    }
 }
 
 /*Pelo menos 6 dígitos*/
-function validaSenha(senha){
-    if (senha.length != 6){
+function validaSenha($elemento){
+    if ($($elemento).val() != 6){
+        invalidaVisualmente($elemento);
         return false;
     } else {
+        validaVisualmente($elemento);
         return true;
     }
 }
@@ -137,11 +190,27 @@ function validaSenha(senha){
 Aqui é feito validação com expressão regular, formato
 99.999.999/9999-99
 */
-function validaCNPJ(cnpj){
+
+function validaCNPJ($elemento){
   var er = /[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}/g;
-  if(cnpj.length != 18){
+  if($($elemento).val() != 18){
+      invalidaVisualmente($elemento);
       return false;
+  } else if(er.test($($elemento).val())){
+      validaVisualmente($elemento);
+      return true;
   } else {
-      return er.test(cnpj);
+    invalidaVisualmente($elemento);
+    return false;
   }
+}
+
+function validaVisualmente($elemento){
+    $elemento.removeClass('invalido');
+    $elemento.addClass('valido');
+}
+
+function invalidaVisualmente($elemento){
+    $elemento.removeClass('valido');
+    $elemento.addClass('invalido');
 }
