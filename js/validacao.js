@@ -114,8 +114,7 @@ function validaEmailCandidato($elemento){
           $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
         }
       }
-  } else {
-    var resultado;
+  } else {    
     $.ajax({
          type: 'post',
          data: {email : $($elemento).val()},
@@ -140,43 +139,52 @@ function validaEmailCandidato($elemento){
          }
      })
   }
-
+  
 }
 
 
 function validaEmailEmpregador($elemento){
-    if ($($elemento).val().length == 0){ //verificar também expressão regular
-        invalidaVisualmente($elemento);
-    } else {
-      var resultado;
-      $.ajax({
-           type: 'post',
-           data: {email : $($elemento).val()},
-           url: 'get-empregador.php',
-           success: function(retorno){
-               console.log("Email não existe: " + retorno);
-               if(retorno == "false"){
-                 invalidaVisualmente($elemento);
-               } else if(retorno == "true") {
-                 validaVisualmente($elemento);
-                 $($elemento).parent().find('.text-danger').remove();
-               }
-           }
-       })
-    }
-    var mensagemInformacaoInvalida = "<p class='text-danger'>Este e-mail já está sendo utilizado.</p>"
-    if($($elemento).hasClass('invalido')){
-      if($($elemento).parent().find('.text-danger').length == 0){
-        $($elemento).parent().append(mensagemInformacaoInvalida).hide().fadeIn(1000);
-      } else {
-        $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+  if ($($elemento).val().length == 0){ //verificar também expressão regular
+      invalidaVisualmente($elemento);
+      var mensagemInformacaoInvalida = "<p class='text-danger'>E-mail inválido.</p>"
+      if($($elemento).hasClass('invalido')){
+        if($($elemento).parent().find('.text-danger').length == 0){
+          $($elemento).parent().append(mensagemInformacaoInvalida);
+          $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+        } else {
+          $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+        }
       }
-    }
+  } else {    
+    $.ajax({
+         type: 'post',
+         data: {email : $($elemento).val()},
+         url: 'get-empregador.php',
+         success: function(retorno){
+             console.log("Email não existe: " + retorno);
+             if(retorno == "false"){
+               invalidaVisualmente($elemento);
+               var mensagemInformacaoInvalida = "<p class='text-danger'>E-mail não disponível.</p>"
+               if($($elemento).hasClass('invalido')){
+                 if($($elemento).parent().find('.text-danger').length == 0){
+                   $($elemento).parent().append(mensagemInformacaoInvalida);
+                   $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+                 } else {
+                   $($elemento).parent().find('.text-danger').hide().fadeIn(1000);
+                 }
+               }
+             } else if(retorno == "true") {
+               validaVisualmente($elemento);
+               $($elemento).parent().find('.text-danger').remove();
+             }
+         }
+     })
+  }
 }
 
 /*Pelo menos 6 dígitos*/
 function validaSenha($elemento){
-    if ($($elemento).val() != 6){
+    if ($($elemento).val() < 6){
         invalidaVisualmente($elemento);
         return false;
     } else {
@@ -193,7 +201,7 @@ Aqui é feito validação com expressão regular, formato
 
 function validaCNPJ($elemento){
   var er = /[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}\-[0-9]{2}/g;
-  if($($elemento).val() != 18){
+  if($($elemento).val().length != 18){
       invalidaVisualmente($elemento);
       return false;
   } else if(er.test($($elemento).val())){

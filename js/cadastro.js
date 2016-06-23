@@ -63,21 +63,22 @@ $('#form-cadastro-empregador').on('blur', 'input', function(){
 
 /*Aqui é feito de fato a validação para o formulário de cadastro de candidato, os listeners anteriores
 apensa guiam o usuário para o preenchimento correto e validação visual dos campos */
-$('#form-cadastro-candidato').on('submit', function(){
-  event.preventDefault();
+$('#form-cadastro-candidato').on('submit', function(event){
+  
+  validaEmailCandidato($('#form-cadastro-candidato .input-cadastrar-email'));
   var booleans = [
-    validaNome($('.input-cadastrar-nome')),
-    validaTelefone($('.input-cadastrar-telefone')),
-    validaCelular($('.input-cadastrar-celular')),
-    validaIdade($('.input-cadastrar-idade')),
-    validaSexo($('.input-cadastrar-sexo')),
-    validaCPF($('.input-cadastrar-cpf')),
-    validaDescricao($('.textarea-cadastrar-descricao')),
-    validaHabilidades($('.textarea-cadastrar-habilidades')),
-    validaEmailCandidato($('.input-cadastrar-email')),
-    validaSenha($('.input-cadastrar-senha'))
+    validaNome($('#form-cadastro-candidato .input-cadastrar-nome')),
+    validaTelefone($('#form-cadastro-candidato .input-cadastrar-telefone')),
+    validaCelular($('#form-cadastro-candidato .input-cadastrar-celular')),
+    validaIdade($('#form-cadastro-candidato .input-cadastrar-idade')),
+    validaCPF($('#form-cadastro-candidato .input-cadastrar-cpf')),
+    validaDescricao($('#form-cadastro-candidato .textarea-cadastrar-descricao')),
+    validaHabilidades($('#form-cadastro-candidato .textarea-cadastrar-habilidades')),
+    $('#form-cadastro-candidato .input-cadastrar-email').hasClass('valido'),
+    validaSenha($('#form-cadastro-candidato .input-cadastrar-senha'))
   ];
 
+  console.log(booleans);
   var invalido = false;
   for (var i = 0; i < booleans.length; i++) {
     if(!booleans[i]){
@@ -86,20 +87,48 @@ $('#form-cadastro-candidato').on('submit', function(){
   }
 
   if(invalido){
-    var mensagemInformacaoInvalida = "<p class='text-danger'>Algum campo não foi preenchido ou é inválido.</p>"
     event.preventDefault();
+    var mensagemInformacaoInvalida = "<p class='text-danger'>Algum campo não foi preenchido ou é inválido.</p>"    
     if($(this).find('button').parent().find('p').length == 0){
       $(this).find('button').parent().append(mensagemInformacaoInvalida).hide().fadeIn(1000);
     } else {
       $(this).find('button').parent().find('p').fadeOut(500).fadeIn(1000);
     }
   }
+
 });
 
 
 
 /*Aqui é feito de fato a validação para o formulário de cadastro de empresa, os listeners anteriores
 apensa guiam o usuário para o preenchimento correto e validação visual dos campos */
-$('#form-cadastro-empregador').on('submit', function(){
+$('#form-cadastro-empregador').on('submit', function(event){
+  validaEmailEmpregador($('#form-cadastro-empregador .input-cadastrar-email'));
+  var booleans = [
+    validaNome($('#form-cadastro-empregador .input-cadastrar-nome')),
+    validaCNPJ($('#form-cadastro-empregador .input-cadastrar-cnpj')),
+    validaTelefone($('#form-cadastro-empregador .input-cadastrar-telefone')),
+    validaCelular($('#form-cadastro-empregador .input-cadastrar-celular')),
+    $('#form-cadastro-empregador .input-cadastrar-email').hasClass('valido'),
+    validaSenha($('#form-cadastro-empregador .input-cadastrar-senha'))
+  ];
+
+  console.log(booleans);
+  var invalido = false;
+  for (var i = 0; i < booleans.length; i++) {
+    if(!booleans[i]){
+        invalido = true;
+    }
+  }
+
+  if(invalido){
+    event.preventDefault();
+    var mensagemInformacaoInvalida = "<p class='text-danger'>Algum campo não foi preenchido ou é inválido.</p>"    
+    if($(this).find('button').parent().find('p').length == 0){
+      $(this).find('button').parent().append(mensagemInformacaoInvalida).hide().fadeIn(1000);
+    } else {
+      $(this).find('button').parent().find('p').fadeOut(500).fadeIn(1000);
+    }
+  }
 
 });
